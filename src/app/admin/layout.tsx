@@ -52,9 +52,16 @@ export default function AdminLayout({
     {
       label: "Messages",
       href: "/admin/messages",
-    },
+    
+    icons: {
+  icon: "/icon.png",
+  shortcut: "/icon.png",
+  apple: "/icon.png",
+},},
   ];
 
+  
+  
   /* =====================================================
      LOAD NEW MESSAGE COUNT
   ====================================================== */

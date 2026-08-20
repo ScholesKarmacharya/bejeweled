@@ -46,17 +46,13 @@ export const metadata: Metadata = {
     },
   ],
 
-  creator:
-    "Bejeweled",
+  creator: "Bejeweled",
 
-  publisher:
-    "Bejeweled",
+  publisher: "Bejeweled",
 
-  applicationName:
-    "Bejeweled",
+  applicationName: "Bejeweled",
 
-  category:
-    "Jewelry",
+  category: "Jewelry",
 
   formatDetection: {
     email: false,
@@ -69,8 +65,7 @@ export const metadata: Metadata = {
 
     locale: "en_US",
 
-    siteName:
-      "Bejeweled",
+    siteName: "Bejeweled",
 
     title:
       "Bejeweled | Brass & Gold Plated Jewelry",
@@ -80,11 +75,10 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url:
-          "favicon.ico",
+        url: "/icon.png",
 
-        width: 1200,
-        height: 630,
+        width: 512,
+        height: 512,
 
         alt:
           "Bejeweled brass and gold plated jewelry",
@@ -93,8 +87,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
-    card:
-      "summary_large_image",
+    card: "summary_large_image",
 
     title:
       "Bejeweled | Brass & Gold Plated Jewelry",
@@ -103,7 +96,7 @@ export const metadata: Metadata = {
       "Discover elegant brass and gold plated jewelry selected for everyday style and special occasions.",
 
     images: [
-      "/twitter-image.jpg",
+      "/icon.png",
     ],
   },
 
@@ -127,10 +120,18 @@ export const metadata: Metadata = {
   },
 
   icons: {
-   
+    icon: [
+      {
+        url: "/icon.png",
+        type: "image/png",
+      },
+    ],
+
+    shortcut:
+      "/icon.png",
 
     apple:
-      "/apple-icon.png",
+      "/icon.png",
   },
 };
 
@@ -145,20 +146,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
       <body>
-
         <CartProvider>
-
           <SiteChrome>
             {children}
           </SiteChrome>
-
         </CartProvider>
-    <BackToTop />
 
+        <BackToTop />
       </body>
-
     </html>
   );
 }

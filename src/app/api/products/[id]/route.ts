@@ -3,6 +3,10 @@ import {
   NextResponse,
 } from "next/server";
 
+import {
+  revalidatePath,
+} from "next/cache";
+
 import mongoose from "mongoose";
 
 import { connectDB } from "@/lib/mongodb";
@@ -21,9 +25,7 @@ async function isAdminAuthenticated(
   request: NextRequest
 ) {
   const token =
-    request.cookies.get(
-      COOKIE_NAME
-    )?.value;
+    request.cookies.get(COOKIE_NAME)?.value;
 
   if (!token) {
     return false;
@@ -35,24 +37,20 @@ async function isAdminAuthenticated(
 }
 
 /* =========================================================
-   GET ONE PRODUCT
-   PUBLIC
+   GET SINGLE PRODUCT
 ========================================================= */
 
 export async function GET(
-  request: NextRequest,
-  {
-    params,
-  }: {
+  _request: NextRequest,
+  context: {
     params: Promise<{
       id: string;
     }>;
   }
 ) {
   try {
-    await connectDB();
-
-    const { id } = await params;
+    const { id } =
+      await context.params;
 
     if (
       !mongoose.Types.ObjectId.isValid(
@@ -63,7 +61,7 @@ export async function GET(
         {
           success: false,
           message:
-            "Invalid product ID",
+            "Invalid product ID.",
         },
         {
           status: 400,
@@ -71,15 +69,19 @@ export async function GET(
       );
     }
 
+    await connectDB();
+
     const product =
-      await Product.findById(id).lean();
+      await Product.findById(
+        id
+      ).lean();
 
     if (!product) {
       return NextResponse.json(
         {
           success: false,
           message:
-            "Product not found",
+            "Product not found.",
         },
         {
           status: 404,
@@ -106,7 +108,7 @@ export async function GET(
       {
         success: false,
         message:
-          "Failed to fetch product",
+          "Unable to load product.",
       },
       {
         status: 500,
@@ -117,22 +119,17 @@ export async function GET(
 
 /* =========================================================
    UPDATE PRODUCT
-   ADMIN ONLY
 ========================================================= */
 
 export async function PATCH(
   request: NextRequest,
-  {
-    params,
-  }: {
+  context: {
     params: Promise<{
       id: string;
     }>;
   }
 ) {
   try {
-    /* AUTH */
-
     const authenticated =
       await isAdminAuthenticated(
         request
@@ -142,6 +139,7 @@ export async function PATCH(
       return NextResponse.json(
         {
           success: false,
+
           message:
             "Unauthorized. Admin login required.",
         },
@@ -151,9 +149,8 @@ export async function PATCH(
       );
     }
 
-    await connectDB();
-
-    const { id } = await params;
+    const { id } =
+      await context.params;
 
     if (
       !mongoose.Types.ObjectId.isValid(
@@ -164,13 +161,15 @@ export async function PATCH(
         {
           success: false,
           message:
-            "Invalid product ID",
+            "Invalid product ID.",
         },
         {
           status: 400,
         }
       );
     }
+
+    await connectDB();
 
     const body =
       await request.json();
@@ -186,18 +185,29 @@ export async function PATCH(
     } = body;
 
     if (
-      !name ||
-      !description ||
-      typeof price !== "number" ||
+      typeof name !==
+        "string" ||
+      !name.trim() ||
+      typeof description !==
+        "string" ||
+      !description.trim() ||
+      typeof price !==
+        "number" ||
       price < 0 ||
-      !category ||
-      !image ||
-      typeof stock !== "number" ||
+      typeof category !==
+        "string" ||
+      !category.trim() ||
+      typeof image !==
+        "string" ||
+      !image.trim() ||
+      typeof stock !==
+        "number" ||
       stock < 0
     ) {
       return NextResponse.json(
         {
           success: false,
+
           message:
             "Please provide valid product information.",
         },
@@ -207,11 +217,30 @@ export async function PATCH(
       );
     }
 
-    const updatedProduct =
+    if (
+      image.startsWith(
+        "data:image/"
+      )
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+
+          message:
+            "Base64 images are not allowed.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const product =
       await Product.findByIdAndUpdate(
         id,
         {
-          name: name.trim(),
+          name:
+            name.trim(),
 
           description:
             description.trim(),
@@ -227,20 +256,23 @@ export async function PATCH(
           stock,
 
           featured:
-            Boolean(featured),
+            Boolean(
+              featured
+            ),
         },
         {
           new: true,
+
           runValidators: true,
         }
-      ).lean();
+      );
 
-    if (!updatedProduct) {
+    if (!product) {
       return NextResponse.json(
         {
           success: false,
           message:
-            "Product not found",
+            "Product not found.",
         },
         {
           status: 404,
@@ -248,15 +280,23 @@ export async function PATCH(
       );
     }
 
+    revalidatePath("/");
+    revalidatePath(
+      "/products"
+    );
+
+    revalidatePath(
+      `/products/${id}`
+    );
+
     return NextResponse.json(
       {
         success: true,
 
         message:
-          "Product updated successfully",
+          "Product updated successfully.",
 
-        product:
-          updatedProduct,
+        product,
       },
       {
         status: 200,
@@ -271,8 +311,9 @@ export async function PATCH(
     return NextResponse.json(
       {
         success: false,
+
         message:
-          "Failed to update product",
+          "Unable to update product.",
       },
       {
         status: 500,
@@ -283,14 +324,11 @@ export async function PATCH(
 
 /* =========================================================
    DELETE PRODUCT
-   ADMIN ONLY
 ========================================================= */
 
 export async function DELETE(
   request: NextRequest,
-  {
-    params,
-  }: {
+  context: {
     params: Promise<{
       id: string;
     }>;
@@ -306,6 +344,7 @@ export async function DELETE(
       return NextResponse.json(
         {
           success: false,
+
           message:
             "Unauthorized. Admin login required.",
         },
@@ -315,9 +354,8 @@ export async function DELETE(
       );
     }
 
-    await connectDB();
-
-    const { id } = await params;
+    const { id } =
+      await context.params;
 
     if (
       !mongoose.Types.ObjectId.isValid(
@@ -328,7 +366,7 @@ export async function DELETE(
         {
           success: false,
           message:
-            "Invalid product ID",
+            "Invalid product ID.",
         },
         {
           status: 400,
@@ -336,17 +374,19 @@ export async function DELETE(
       );
     }
 
-    const deletedProduct =
+    await connectDB();
+
+    const product =
       await Product.findByIdAndDelete(
         id
       );
 
-    if (!deletedProduct) {
+    if (!product) {
       return NextResponse.json(
         {
           success: false,
           message:
-            "Product not found",
+            "Product not found.",
         },
         {
           status: 404,
@@ -354,11 +394,17 @@ export async function DELETE(
       );
     }
 
+    revalidatePath("/");
+    revalidatePath(
+      "/products"
+    );
+
     return NextResponse.json(
       {
         success: true,
+
         message:
-          "Product deleted successfully",
+          "Product deleted successfully.",
       },
       {
         status: 200,
@@ -373,8 +419,9 @@ export async function DELETE(
     return NextResponse.json(
       {
         success: false,
+
         message:
-          "Failed to delete product",
+          "Unable to delete product.",
       },
       {
         status: 500,

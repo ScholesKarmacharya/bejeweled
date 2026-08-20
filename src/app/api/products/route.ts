@@ -3,7 +3,9 @@ import {
   NextResponse,
 } from "next/server";
 
-import { revalidatePath } from "next/cache";
+import {
+  revalidatePath,
+} from "next/cache";
 
 import { connectDB } from "@/lib/mongodb";
 import Product from "@/models/Product";
@@ -32,21 +34,21 @@ async function isAdminAuthenticated(
 
 /* =========================================================
    GET PRODUCTS
-   PUBLIC / ADMIN
 ========================================================= */
 
 export async function GET() {
   try {
     await connectDB();
 
-    const products = await Product.find()
-      .select(
-        "_id name description price category image stock featured createdAt"
-      )
-      .sort({
-        createdAt: -1,
-      })
-      .lean();
+    const products =
+      await Product.find()
+        .select(
+          "_id name description price category image stock featured createdAt"
+        )
+        .sort({
+          createdAt: -1,
+        })
+        .lean();
 
     return NextResponse.json(
       {
@@ -83,15 +85,12 @@ export async function GET() {
 
 /* =========================================================
    CREATE PRODUCT
-   ADMIN ONLY
 ========================================================= */
 
 export async function POST(
   request: NextRequest
 ) {
   try {
-    /* AUTH */
-
     const authenticated =
       await isAdminAuthenticated(
         request
@@ -125,27 +124,30 @@ export async function POST(
       featured,
     } = body;
 
-    /* VALIDATION */
-
     if (
-      typeof name !== "string" ||
+      typeof name !==
+        "string" ||
       !name.trim() ||
       typeof description !==
         "string" ||
       !description.trim() ||
-      typeof price !== "number" ||
+      typeof price !==
+        "number" ||
       price < 0 ||
       typeof category !==
         "string" ||
       !category.trim() ||
-      typeof image !== "string" ||
+      typeof image !==
+        "string" ||
       !image.trim() ||
-      typeof stock !== "number" ||
+      typeof stock !==
+        "number" ||
       stock < 0
     ) {
       return NextResponse.json(
         {
           success: false,
+
           message:
             "Please provide valid product information.",
         },
@@ -155,11 +157,32 @@ export async function POST(
       );
     }
 
-    /* CREATE PRODUCT */
+    /*
+      Do not allow new Base64 images.
+    */
+
+    if (
+      image.startsWith(
+        "data:image/"
+      )
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+
+          message:
+            "Base64 images are not allowed. Please upload the image first.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
     const product =
       await Product.create({
-        name: name.trim(),
+        name:
+          name.trim(),
 
         description:
           description.trim(),
@@ -169,23 +192,21 @@ export async function POST(
         category:
           category.trim(),
 
-        image: image.trim(),
+        image:
+          image.trim(),
 
         stock,
 
         featured:
-          Boolean(featured),
+          Boolean(
+            featured
+          ),
       });
 
-    /*
-      Refresh cached public pages immediately.
-
-      Homepage and Products page are cached for speed,
-      but when a product is added we invalidate them.
-    */
-
     revalidatePath("/");
-    revalidatePath("/products");
+    revalidatePath(
+      "/products"
+    );
 
     return NextResponse.json(
       {
