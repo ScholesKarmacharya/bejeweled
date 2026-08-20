@@ -202,105 +202,77 @@ export default async function Home() {
           HERO
       ====================================================== */}
 
-      <section
-        className="
-          relative
-          min-h-[900px]
-          overflow-hidden
-          bg-[#120805]
-
-          sm:min-h-[88vh]
-        "
-      >
+      <section className="relative overflow-hidden bg-[#120805]">
 
         {/* =====================================================
-            MOBILE BANNER
-            Shows the complete banner image
+            MOBILE HERO
         ====================================================== */}
 
-        <img
-          src="/banner.png"
-          alt="Bejeweled gold plated jewelry collection"
-          className="
-            absolute
-            inset-0
+        <div className="sm:hidden">
 
-            h-full
-            w-full
+          {/* MOBILE IMAGE AREA */}
 
-            object-contain
-            object-top
+          <div className="relative h-[390px] overflow-hidden bg-[#120805]">
 
-            sm:hidden
-          "
-        />
+            <img
+              src="/banner.png"
+              alt="Bejeweled gold plated jewelry collection"
+              className="
+                absolute
+                inset-0
+                h-full
+                w-full
+                object-cover
+                object-[68%_center]
+              "
+            />
 
-        {/* =====================================================
-            TABLET / DESKTOP BANNER
-        ====================================================== */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#120805]/40 via-transparent to-black/5" />
 
-        <img
-          src="/banner.png"
-          alt="Bejeweled gold plated jewelry collection"
-          className="
-            absolute
-            inset-0
+            {/* BRAND ABOVE IMAGE */}
 
-            hidden
-            h-full
-            w-full
+            <div className="absolute bottom-7 left-7 z-10">
 
-            object-cover
-            object-center
+              <p
+                className={`${montserrat.className} text-[10px] font-medium uppercase tracking-[0.5em] text-[#d4ad61]`}
+              >
+                Bejeweled
+              </p>
 
-            sm:block
-          "
-        />
+              <div className="mt-4 flex items-center gap-3">
 
-        {/* DARK OVERLAY */}
+                <span className="h-px w-10 bg-[#b98c3f]" />
 
-        <div className="absolute inset-0 bg-black/20" />
+                <span className="text-[13px] text-[#c59a4f]">
+                  ❈
+                </span>
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[#160906]/95 via-[#160906]/65 to-transparent" />
+                <span className="h-px w-10 bg-[#b98c3f]" />
 
-        {/* CONTENT */}
-
-        <div className="relative mx-auto flex min-h-[900px] max-w-7xl items-center px-6 py-20 sm:min-h-[88vh] sm:px-8 lg:px-10">
-
-          <div className="max-w-[650px]">
-
-            <p
-              className={`${montserrat.className} text-[11px] font-medium uppercase tracking-[0.55em] text-[#d4ad61] sm:text-xs`}
-            >
-              Bejeweled
-            </p>
-
-            <div className="mt-5 flex items-center gap-3">
-
-              <span className="h-px w-10 bg-[#b98c3f]" />
-
-              <span className="text-[15px] text-[#c59a4f]">
-                ❈
-              </span>
-
-              <span className="h-px w-10 bg-[#b98c3f]" />
+              </div>
 
             </div>
 
+          </div>
+
+          {/* MOBILE BLACK CONTENT */}
+
+          <div className="bg-[#120805] px-7 pb-8 pt-8">
+
             <h1
-              className={`${cormorant.className} mt-7 text-[48px] font-medium leading-[0.95] tracking-[-0.025em] text-[#f8f5ef] sm:text-[62px] lg:text-[76px]`}
+              className={`${cormorant.className} text-[47px] font-medium leading-[0.92] tracking-[-0.025em] text-[#f8f5ef]`}
             >
               Timeless Beauty,
             </h1>
 
             <p
-              className={`${allura.className} -mt-1 text-[52px] leading-none text-[#d7ad61] sm:text-[68px] lg:text-[82px]`}
+              className={`${allura.className} -mt-1 text-[51px] leading-[0.95] text-[#d7ad61]`}
             >
               Crafted for You
             </p>
 
             <div
-              className={`${montserrat.className} mt-8 space-y-1 text-[14px] leading-7 text-[#f1e6d3] sm:text-[16px]`}
+              className={`${montserrat.className} mt-7 space-y-1 text-[14px] leading-7 text-[#f1e6d3]`}
             >
               <p>
                 Original Brass &amp;
@@ -311,12 +283,15 @@ export default async function Home() {
                 </span>
               </p>
 
-              <p className="text-white/75">
+              <p className="text-white/65">
                 Elegance in Every Detail.
               </p>
+
             </div>
 
-            <div className="mt-7 flex max-w-[285px] items-center gap-3">
+            {/* DIVIDER */}
+
+            <div className="mt-7 flex max-w-[290px] items-center gap-3">
 
               <span className="h-px flex-1 bg-[#a77c38]/80" />
 
@@ -328,109 +303,322 @@ export default async function Home() {
 
             </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            {/* MOBILE BUTTONS */}
+
+            <div className="mt-7 flex flex-col gap-3">
 
               <Link
                 href="/products"
-                className={`${montserrat.className} inline-flex min-w-[215px] items-center justify-center rounded-full bg-gradient-to-r from-[#f3d18b] to-[#d6a64e] px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#211408] shadow-[0_8px_28px_rgba(201,154,73,0.18)] transition duration-300 hover:-translate-y-0.5 hover:from-[#f7dda4] hover:to-[#e2b862] hover:shadow-[0_12px_32px_rgba(201,154,73,0.28)]`}
+                className={`${montserrat.className} inline-flex h-[56px] w-full items-center justify-center rounded-full bg-gradient-to-r from-[#f3d18b] to-[#d6a64e] px-7 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#211408] shadow-[0_8px_28px_rgba(201,154,73,0.18)] transition duration-300 hover:from-[#f7dda4] hover:to-[#e2b862]`}
               >
                 Shop Collection
               </Link>
 
               <Link
                 href="/about"
-                className={`${montserrat.className} inline-flex min-w-[175px] items-center justify-center rounded-full border border-[#d2a851] px-7 py-3.5 text-[12px] font-medium uppercase tracking-[0.08em] text-[#efd49b] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d2a851] hover:text-[#1a0d07]`}
+                className={`${montserrat.className} inline-flex h-[56px] w-full items-center justify-center rounded-full border border-[#d2a851] px-7 text-[12px] font-medium uppercase tracking-[0.08em] text-[#efd49b] transition duration-300 hover:bg-[#d2a851] hover:text-[#1a0d07]`}
               >
                 Our Story
               </Link>
 
             </div>
 
-            {/* TRUST POINTS */}
+            {/* MOBILE TRUST POINTS */}
 
-            <div className="mt-12 grid max-w-[620px] grid-cols-1 gap-5 border-t border-[#a77c38]/20 pt-7 sm:grid-cols-3 sm:gap-0">
+            <div className="mt-8 border-t border-[#a77c38]/25 pt-6">
 
-              <div className="group flex items-center gap-3 sm:border-r sm:border-[#a77c38]/35 sm:pr-6">
+              <div className="grid grid-cols-3 gap-2">
 
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center text-[#d1a752] transition duration-300 group-hover:scale-110">
+                {/* PREMIUM QUALITY */}
 
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="h-8 w-8"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
+                <div className="flex flex-col items-center text-center">
+
+                  <div className="flex h-9 w-9 items-center justify-center text-[#d1a752]">
+
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="h-7 w-7"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                    >
+                      <path d="M3 8l4-5h10l4 5-9 13L3 8Z" />
+                      <path d="M3 8h18M7 3l5 18M17 3l-5 18" />
+                    </svg>
+
+                  </div>
+
+                  <p
+                    className={`${montserrat.className} mt-2 text-[8px] font-medium uppercase leading-[1.6] tracking-[0.08em] text-[#e6c278]`}
                   >
-                    <path d="M3 8l4-5h10l4 5-9 13L3 8Z" />
-                    <path d="M3 8h18M7 3l5 18M17 3l-5 18" />
-                  </svg>
+                    Premium
+                    <br />
+                    Quality
+                  </p>
 
                 </div>
 
-                <p
-                  className={`${montserrat.className} text-[10px] font-medium uppercase leading-5 tracking-[0.08em] text-[#e6c278]`}
-                >
-                  Premium
-                  <br />
-                  Quality
+                {/* HANDCRAFTED */}
+
+                <div className="flex flex-col items-center border-x border-[#a77c38]/25 text-center">
+
+                  <div className="flex h-9 w-9 items-center justify-center text-[#d1a752]">
+
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="h-7 w-7"
+                      stroke="currentColor"
+                      strokeWidth="1.3"
+                    >
+                      <circle cx="12" cy="12" r="3" />
+                      <circle cx="12" cy="5" r="3" />
+                      <circle cx="12" cy="19" r="3" />
+                      <circle cx="5" cy="12" r="3" />
+                      <circle cx="19" cy="12" r="3" />
+                    </svg>
+
+                  </div>
+
+                  <p
+                    className={`${montserrat.className} mt-2 text-[8px] font-medium uppercase leading-[1.6] tracking-[0.08em] text-[#e6c278]`}
+                  >
+                    Handcrafted
+                    <br />
+                    Design
+                  </p>
+
+                </div>
+
+                {/* LONG LASTING */}
+
+                <div className="flex flex-col items-center text-center">
+
+                  <div className="flex h-9 w-9 items-center justify-center text-[#d1a752]">
+
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="h-7 w-7"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                    >
+                      <path d="M12 2 20 5v6c0 5-3.2 8.6-8 11-4.8-2.4-8-6-8-11V5l8-3Z" />
+                      <path d="m8.5 12 2.2 2.2 4.8-5" />
+                    </svg>
+
+                  </div>
+
+                  <p
+                    className={`${montserrat.className} mt-2 text-[8px] font-medium uppercase leading-[1.6] tracking-[0.08em] text-[#e6c278]`}
+                  >
+                    Long Lasting
+                    <br />
+                    Finish
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* =====================================================
+            DESKTOP / TABLET HERO
+            UNCHANGED
+        ====================================================== */}
+
+        <div className="relative hidden min-h-[88vh] sm:block">
+
+          {/* BACKGROUND IMAGE */}
+
+          <img
+            src="/banner.png"
+            alt="Bejeweled gold plated jewelry collection"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          />
+
+          {/* DARK OVERLAY */}
+
+          <div className="absolute inset-0 bg-black/20" />
+
+          <div className="absolute inset-0 bg-gradient-to-r from-[#160906]/95 via-[#160906]/65 to-transparent" />
+
+          {/* CONTENT */}
+
+          <div className="relative mx-auto flex min-h-[88vh] max-w-7xl items-center px-8 py-20 lg:px-10">
+
+            <div className="max-w-[650px]">
+
+              <p
+                className={`${montserrat.className} text-xs font-medium uppercase tracking-[0.55em] text-[#d4ad61]`}
+              >
+                Bejeweled
+              </p>
+
+              <div className="mt-5 flex items-center gap-3">
+
+                <span className="h-px w-10 bg-[#b98c3f]" />
+
+                <span className="text-[15px] text-[#c59a4f]">
+                  ❈
+                </span>
+
+                <span className="h-px w-10 bg-[#b98c3f]" />
+
+              </div>
+
+              <h1
+                className={`${cormorant.className} mt-7 text-[62px] font-medium leading-[0.95] tracking-[-0.025em] text-[#f8f5ef] lg:text-[76px]`}
+              >
+                Timeless Beauty,
+              </h1>
+
+              <p
+                className={`${allura.className} -mt-1 text-[68px] leading-none text-[#d7ad61] lg:text-[82px]`}
+              >
+                Crafted for You
+              </p>
+
+              <div
+                className={`${montserrat.className} mt-8 space-y-1 text-[16px] leading-7 text-[#f1e6d3]`}
+              >
+                <p>
+                  Original Brass &amp;
+                  Gold Plated Jewelry{" "}
+
+                  <span className="text-[#e9bd60]">
+                    ✦
+                  </span>
+                </p>
+
+                <p className="text-white/75">
+                  Elegance in Every Detail.
                 </p>
 
               </div>
 
-              <div className="group flex items-center gap-3 sm:border-r sm:border-[#a77c38]/35 sm:px-6">
+              <div className="mt-7 flex max-w-[285px] items-center gap-3">
 
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center text-[#d1a752] transition duration-300 group-hover:scale-110">
+                <span className="h-px flex-1 bg-[#a77c38]/80" />
 
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="h-8 w-8"
-                    stroke="currentColor"
-                    strokeWidth="1.3"
-                  >
-                    <circle cx="12" cy="12" r="3" />
-                    <circle cx="12" cy="5" r="3" />
-                    <circle cx="12" cy="19" r="3" />
-                    <circle cx="5" cy="12" r="3" />
-                    <circle cx="19" cy="12" r="3" />
-                  </svg>
+                <span className="text-xs text-[#c99b4c]">
+                  ❈
+                </span>
 
-                </div>
-
-                <p
-                  className={`${montserrat.className} text-[10px] font-medium uppercase leading-5 tracking-[0.08em] text-[#e6c278]`}
-                >
-                  Handcrafted
-                  <br />
-                  Design
-                </p>
+                <span className="h-px flex-1 bg-[#a77c38]/80" />
 
               </div>
 
-              <div className="group flex items-center gap-3 sm:pl-6">
+              <div className="mt-8 flex flex-row gap-3">
 
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center text-[#d1a752] transition duration-300 group-hover:scale-110">
+                <Link
+                  href="/products"
+                  className={`${montserrat.className} inline-flex min-w-[215px] items-center justify-center rounded-full bg-gradient-to-r from-[#f3d18b] to-[#d6a64e] px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#211408] shadow-[0_8px_28px_rgba(201,154,73,0.18)] transition duration-300 hover:-translate-y-0.5 hover:from-[#f7dda4] hover:to-[#e2b862] hover:shadow-[0_12px_32px_rgba(201,154,73,0.28)]`}
+                >
+                  Shop Collection
+                </Link>
 
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="h-8 w-8"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
+                <Link
+                  href="/about"
+                  className={`${montserrat.className} inline-flex min-w-[175px] items-center justify-center rounded-full border border-[#d2a851] px-7 py-3.5 text-[12px] font-medium uppercase tracking-[0.08em] text-[#efd49b] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d2a851] hover:text-[#1a0d07]`}
+                >
+                  Our Story
+                </Link>
+
+              </div>
+
+              {/* TRUST POINTS */}
+
+              <div className="mt-12 grid max-w-[620px] grid-cols-3 gap-0 border-t border-[#a77c38]/20 pt-7">
+
+                <div className="group flex items-center gap-3 border-r border-[#a77c38]/35 pr-6">
+
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center text-[#d1a752] transition duration-300 group-hover:scale-110">
+
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="h-8 w-8"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                    >
+                      <path d="M3 8l4-5h10l4 5-9 13L3 8Z" />
+                      <path d="M3 8h18M7 3l5 18M17 3l-5 18" />
+                    </svg>
+
+                  </div>
+
+                  <p
+                    className={`${montserrat.className} text-[10px] font-medium uppercase leading-5 tracking-[0.08em] text-[#e6c278]`}
                   >
-                    <path d="M12 2 20 5v6c0 5-3.2 8.6-8 11-4.8-2.4-8-6-8-11V5l8-3Z" />
-                    <path d="m8.5 12 2.2 2.2 4.8-5" />
-                  </svg>
+                    Premium
+                    <br />
+                    Quality
+                  </p>
 
                 </div>
 
-                <p
-                  className={`${montserrat.className} text-[10px] font-medium uppercase leading-5 tracking-[0.08em] text-[#e6c278]`}
-                >
-                  Long Lasting
-                  <br />
-                  Finish
-                </p>
+                <div className="group flex items-center gap-3 border-r border-[#a77c38]/35 px-6">
+
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center text-[#d1a752] transition duration-300 group-hover:scale-110">
+
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="h-8 w-8"
+                      stroke="currentColor"
+                      strokeWidth="1.3"
+                    >
+                      <circle cx="12" cy="12" r="3" />
+                      <circle cx="12" cy="5" r="3" />
+                      <circle cx="12" cy="19" r="3" />
+                      <circle cx="5" cy="12" r="3" />
+                      <circle cx="19" cy="12" r="3" />
+                    </svg>
+
+                  </div>
+
+                  <p
+                    className={`${montserrat.className} text-[10px] font-medium uppercase leading-5 tracking-[0.08em] text-[#e6c278]`}
+                  >
+                    Handcrafted
+                    <br />
+                    Design
+                  </p>
+
+                </div>
+
+                <div className="group flex items-center gap-3 pl-6">
+
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center text-[#d1a752] transition duration-300 group-hover:scale-110">
+
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="h-8 w-8"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                    >
+                      <path d="M12 2 20 5v6c0 5-3.2 8.6-8 11-4.8-2.4-8-6-8-11V5l8-3Z" />
+                      <path d="m8.5 12 2.2 2.2 4.8-5" />
+                    </svg>
+
+                  </div>
+
+                  <p
+                    className={`${montserrat.className} text-[10px] font-medium uppercase leading-5 tracking-[0.08em] text-[#e6c278]`}
+                  >
+                    Long Lasting
+                    <br />
+                    Finish
+                  </p>
+
+                </div>
 
               </div>
 
