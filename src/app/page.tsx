@@ -115,11 +115,6 @@ async function getFeaturedProducts(): Promise<
   try {
     await connectDB();
 
-    /*
-      We only request the four products
-      required by the homepage.
-    */
-
     let products =
       await Product.find({
         featured: true,
@@ -132,12 +127,6 @@ async function getFeaturedProducts(): Promise<
         })
         .limit(4)
         .lean();
-
-    /*
-      Same behavior as before:
-      if no featured products exist,
-      show four newest products.
-    */
 
     if (products.length === 0) {
       products =
@@ -213,14 +202,59 @@ export default async function Home() {
           HERO
       ====================================================== */}
 
-      <section className="relative min-h-[88vh] overflow-hidden bg-[#120805]">
+      <section
+        className="
+          relative
+          min-h-[900px]
+          overflow-hidden
+          bg-[#120805]
 
-        {/* BACKGROUND IMAGE */}
+          sm:min-h-[88vh]
+        "
+      >
+
+        {/* =====================================================
+            MOBILE BANNER
+            Shows the complete banner image
+        ====================================================== */}
 
         <img
           src="/banner.png"
           alt="Bejeweled gold plated jewelry collection"
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="
+            absolute
+            inset-0
+
+            h-full
+            w-full
+
+            object-contain
+            object-top
+
+            sm:hidden
+          "
+        />
+
+        {/* =====================================================
+            TABLET / DESKTOP BANNER
+        ====================================================== */}
+
+        <img
+          src="/banner.png"
+          alt="Bejeweled gold plated jewelry collection"
+          className="
+            absolute
+            inset-0
+
+            hidden
+            h-full
+            w-full
+
+            object-cover
+            object-center
+
+            sm:block
+          "
         />
 
         {/* DARK OVERLAY */}
@@ -231,7 +265,7 @@ export default async function Home() {
 
         {/* CONTENT */}
 
-        <div className="relative mx-auto flex min-h-[88vh] max-w-7xl items-center px-6 py-20 sm:px-8 lg:px-10">
+        <div className="relative mx-auto flex min-h-[900px] max-w-7xl items-center px-6 py-20 sm:min-h-[88vh] sm:px-8 lg:px-10">
 
           <div className="max-w-[650px]">
 
